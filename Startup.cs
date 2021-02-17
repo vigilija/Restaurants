@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace OdeToFood
 {
@@ -49,6 +50,8 @@ namespace OdeToFood
                 app.UseHsts();
             }
 
+            app.Use(SayHelloMiddleware);
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseNodeModules(); //parameter env
@@ -62,6 +65,21 @@ namespace OdeToFood
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();//prideta
             });
+        }
+
+        private RequestDelegate SayHelloMiddleware(RequestDelegate next)
+        {
+            return async ctx =>
+            {
+                if (ctx.Request.Path.StartsWithSegments("/hello"))
+                {
+                    await ctx.Response.WriteAsync("Hello, Middlware");
+                }
+                else
+                {
+                    await next(ctx);
+                }
+            };
         }
     }
 }
