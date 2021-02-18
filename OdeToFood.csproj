@@ -8,10 +8,10 @@
     <Exec Command="npm install"/>
   </Target>
 
-  <ImportGroup>
-    <Content Include="node_modules/**" CopyToPublishDirectory ="PreserveNewest" />
-  </ImportGroup>
-
+  <ItemGroup>
+    <Content Include="node_modules/**" CopyToPublishDirectory ="PreserveNewest" />   
+  </ItemGroup>
+ 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
